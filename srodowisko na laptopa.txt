@@ -1,0 +1,29 @@
+Podsumowując, walka ze środowiskiem sprowadziła się do poprawnego namierzenia Twojego folderu .venv i zainstalowania w nim brakujących bibliotek. Oto co konkretnie zrobiliśmy, żeby system przestał sypać błędami:
+
+1. Rozwiązanie konfliktu nazw
+Namierzyliśmy, że Twoje środowisko wirtualne ma kropkę na początku nazwy (.venv), a nie jest standardowym venv. To był kluczowy powód, dla którego komendy "nie widziały" ścieżki.
+
+2. Instalacja bibliotek "wewnątrz" venv
+Zamiast polegać na globalnym Pythonie, użyliśmy bezpośredniej ścieżki do instalatora w Twoim folderze projektowym. Wykonaliśmy komendę:
+.\.venv\Scripts\python.exe -m pip install matplotlib pyodbc
+To wymusiło instalację:
+
+Matplotlib: Dzięki temu odblokowaliśmy funkcje wykresów (flaga MATPLOTLIB_OK zmieni się na True).
+
+Pyodbc: Usunęliśmy błędy importu dla opcjonalnego połączenia z SQL Server.
+
+3. Aktywacja środowiska w terminalu
+Ustaliliśmy, że napis (.venv) w terminalu VS Code oznacza, że pracujesz w odizolowanym środowisku. Dowiedziałeś się, że jeśli to widzisz, możesz używać prostego pip install, ale bezpieczniej jest wskazać pełną ścieżkę do skryptu w Scripts, gdyby PowerShell stawiał opory.
+
+4. Konfiguracja edytora (Pylance)
+Błędy reportMissingImports zniknęły (lub znikną po restarcie), ponieważ biblioteki fizycznie pojawiły się w folderze, który VS Code skanuje jako Twój interpreter.
+
+Co masz teraz gotowe:
+
+SQL: Masz kompletny zestaw zapytań do wszystkich raportów (w tym rankingi i niskie stany).
+
+Biblioteki: Masz zainstalowane narzędzia do wykresów i bazy danych.
+
+Baza: Plik gmsystem.db jest podpięty i gotowy do mielenia danych.
+
+Teraz wystarczy, że upewnisz się, iż w metodzie add_wydanie masz ten kawałek kodu sprawdzający, czy nie wydajesz więcej, niż masz na stanie – i projekt jest "do oddania".
